@@ -137,14 +137,14 @@
         // Получаем данные о текущем пользователе
         firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
-                // Получаем данные пользователя из Firestore
-                const userRef = db.collection('users').doc(user.uid);
+                // Получаем данные пользователя из Firestore по email
+                const userRef = db.collection('users').doc(user.email); // Используем email как ID документа
                 const doc = await userRef.get();
 
                 if (doc.exists) {
                     const userData = doc.data();
-                    // Отображаем имя пользователя и его баланс
-                    document.getElementById('user-name').textContent = userData.name || user.email;
+                    // Отображаем email пользователя и его баланс
+                    document.getElementById('user-name').textContent = userData.email;
                     document.getElementById('user-balance').textContent = `₽ ${userData.balance || 0}`;
                 } else {
                     console.log("Пользователь не найден в базе данных.");
@@ -157,3 +157,4 @@
     </script>
 </body>
 </html>
+
