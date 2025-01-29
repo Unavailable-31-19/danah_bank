@@ -54,7 +54,7 @@
 
                 // Сохранение данных пользователя в Firestore
                 const user = firebase.auth().currentUser;
-                const userRef = db.collection('users').doc(user.uid);  // Коллекция пользователей
+                const userRef = db.collection('users').doc(user.email);  // Используем email как ID документа
                 await userRef.set({
                     email: user.email,
                     lastLogin: new Date()
