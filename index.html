@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Баланс</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            font-family: Arial, sans-serif;
+            font-weight: 600;
+        }
+
+        /* Верхняя полоска */
+        .top-bar {
+            width: 100%;
+            background-color: #333333;
+            color: #ffffff;
+            padding: 10px;
+            text-align: right;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 14px;
+            box-sizing: border-box; /* Учитываем отступы */
+        }
+
+        .top-bar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .top-bar a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 32.5vh; /* Занимает 40% высоты страницы */
+            padding: 20px;
+            background-color: #333333; /* Контейнер с отличным от фона цветом */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            width: 90%;
+            max-width: 400px;
+            position: absolute; /* Позиционирование для центрирования */
+            top: 50%; /* Начало с середины страницы */
+            left: 50%; /* Начало с середины страницы */
+            transform: translate(-50%, -50%); /* Центрирование */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 35px;
+        }
+
+        .balance {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-top: 10px;
+        }
+
+        .divider {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .divider hr {
+            border: none;
+            height: 1px;
+            background-color: #555;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .balance {
+                font-size: 28px;
+            }
+
+            .top-bar {
+                font-size: 12px;
+                padding: 8px; /* Уменьшаем отступы на маленьких экранах */
+            }
+
+            .top-bar a {
+                font-size: 12px; /* Уменьшаем размер шрифта ссылки */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхняя полоска с ссылкой на login.html -->
+    <div class="top-bar">
+        <a href="login.html">Войти</a>
+    </div>
+
+    <!-- Контейнер с балансом -->
+    <div class="container">
+        <h1>Ваш баланс</h1>
+        <div class="balance">₽ 10 000</div>
+    </div>
+</body>
+</html>
