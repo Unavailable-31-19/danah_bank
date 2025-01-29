@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="styles1.css">
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Регистрация</h1>
+        <form id="signupForm">
+            <input type="email" id="email" placeholder="Электронная почта" required>
+            <input type="password" id="password" placeholder="Пароль" required>
+            <button type="submit" class="signup">Зарегистрироваться</button>
+        </form>
+        <div class="divider">
+            <hr>
+        </div>
+        <p><font color="gray">Уже есть аккаунт? <a href="login.html"></font><font color="light gray">Войти</font></a></p>
+    </div>
+    <script>
+        // Конфигурация Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyD3EDKVbNdPHBhMNGFB4RTnk8QNVMeg1Ho",
+            authDomain: "danah-school-db.firebaseapp.com",
+            projectId: "danah-school-db",
+            storageBucket: "danah-school-db.firebasestorage.app",
+            messagingSenderId: "400447808100",
+            appId: "1:400447808100:web:585a7f81f7d3b138d7b571",
+            measurementId: "G-S62J55TS5X"
+        };
+    
+        // Инициализация Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.getAuth(app);
+        const db = firebase.firestore(app);  // Инициализация Firestore
+    
+        // Обработчик регистрации
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+    
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+    
+            try {
+                // Попытка регистрации
+                const userCredential = await firebase.createUserWithEmailAndPassword(auth, email, password);
+                alert('Регистрация успешна!');
+    
+                // Сохранение данных пользователя в Firestore
+                const user = firebase.auth().currentUser;
+                const userRef = db.collection('users').doc(user.uid);  // Коллекция пользователей
+                await userRef.set({
+                    email: user.email,
+                    lastLogin: new Date(),
+                    role: "user" // Роль по умолчанию — пользователь
+                }, { merge: true });
+    
+                // Перенаправление на страницу входа
+                window.location.href = 'login.html';
+            } catch (error) {
+                alert(`Ошибка: ${error.message}`);
+            }
+        });
+    </script>
+    
+</body>
+</html>
