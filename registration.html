@@ -25,14 +25,14 @@
     <script>
         // Конфигурация Firebase
         const firebaseConfig = {
-  apiKey: "AIzaSyD3EDKVbNdPHBhMNGFB4RTnk8QNVMeg1Ho",
-  authDomain: "danah-school-db.firebaseapp.com",
-  projectId: "danah-school-db",
-  storageBucket: "danah-school-db.firebasestorage.app",
-  messagingSenderId: "400447808100",
-  appId: "1:400447808100:web:585a7f81f7d3b138d7b571",
-  measurementId: "G-S62J55TS5X"
-};
+            apiKey: "AIzaSyD3EDKVbNdPHBhMNGFB4RTnk8QNVMeg1Ho",
+            authDomain: "danah-school-db.firebaseapp.com",
+            projectId: "danah-school-db",
+            storageBucket: "danah-school-db.firebasestorage.app",
+            messagingSenderId: "400447808100",
+            appId: "1:400447808100:web:585a7f81f7d3b138d7b571",
+            measurementId: "G-S62J55TS5X"
+        };
 
         // Инициализация Firebase
         const app = firebase.initializeApp(firebaseConfig);
@@ -51,9 +51,12 @@
                 const userCredential = await firebase.createUserWithEmailAndPassword(auth, email, password);
                 alert('Регистрация успешна!');
 
+                // Получаем UID нового пользователя
+                const user = userCredential.user;
+                const uid = user.uid;
+
                 // Сохранение данных пользователя в Firestore
-                const user = firebase.auth().currentUser;
-                const userRef = db.collection('users').doc(user.email);  // Используем email как ID документа
+                const userRef = db.collection('users').doc(uid);  // Используем UID как ID документа
                 await userRef.set({
                     email: user.email,
                     balance: 0,  // Начальный баланс 0
@@ -68,6 +71,6 @@
             }
         });
     </script>
-
 </body>
 </html>
+
