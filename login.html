@@ -26,14 +26,14 @@
     <script>
         // Конфигурация Firebase
         const firebaseConfig = {
-  apiKey: "AIzaSyD3EDKVbNdPHBhMNGFB4RTnk8QNVMeg1Ho",
-  authDomain: "danah-school-db.firebaseapp.com",
-  projectId: "danah-school-db",
-  storageBucket: "danah-school-db.firebasestorage.app",
-  messagingSenderId: "400447808100",
-  appId: "1:400447808100:web:585a7f81f7d3b138d7b571",
-  measurementId: "G-S62J55TS5X"
-};
+            apiKey: "AIzaSyD3EDKVbNdPHBhMNGFB4RTnk8QNVMeg1Ho",
+            authDomain: "danah-school-db.firebaseapp.com",
+            projectId: "danah-school-db",
+            storageBucket: "danah-school-db.firebasestorage.app",
+            messagingSenderId: "400447808100",
+            appId: "1:400447808100:web:585a7f81f7d3b138d7b571",
+            measurementId: "G-S62J55TS5X"
+        };
 
         // Инициализация Firebase
         const app = firebase.initializeApp(firebaseConfig);
@@ -60,8 +60,8 @@
                     lastLogin: new Date()
                 }, { merge: true });
 
-                // Перенаправление на главную страницу
-                window.location.href = 'main.html';
+                // Перенаправление на страницу index1.html
+                window.location.href = 'index1.html';
             } catch (error) {
                 alert(`Ошибка: ${error.message}`);
             }
@@ -69,3 +69,4 @@
     </script>
 </body>
 </html>
+
