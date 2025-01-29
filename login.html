@@ -26,14 +26,14 @@
     <script>
         // Конфигурация Firebase
         const firebaseConfig = {
-  apiKey: "AIzaSyD3EDKVbNdPHBhMNGFB4RTnk8QNVMeg1Ho",
-  authDomain: "danah-school-db.firebaseapp.com",
-  projectId: "danah-school-db",
-  storageBucket: "danah-school-db.firebasestorage.app",
-  messagingSenderId: "400447808100",
-  appId: "1:400447808100:web:585a7f81f7d3b138d7b571",
-  measurementId: "G-S62J55TS5X"
-};
+            apiKey: "AIzaSyD3EDKVbNdPHBhMNGFB4RTnk8QNVMeg1Ho",
+            authDomain: "danah-school-db.firebaseapp.com",
+            projectId: "danah-school-db",
+            storageBucket: "danah-school-db.firebasestorage.app",
+            messagingSenderId: "400447808100",
+            appId: "1:400447808100:web:585a7f81f7d3b138d7b571",
+            measurementId: "G-S62J55TS5X"
+        };
 
         // Инициализация Firebase
         const app = firebase.initializeApp(firebaseConfig);
@@ -50,17 +50,18 @@
             try {
                 // Попытка входа
                 const userCredential = await firebase.signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;  // Получаем данные о пользователе
+
                 alert('Успешный вход!');
 
                 // Сохранение данных пользователя в Firestore
-                const user = firebase.auth().currentUser;
-                const userRef = db.collection('users').doc(user.uid);  // Коллекция пользователей
+                const userRef = db.collection('users').doc(user.uid);  // Используем UID как ID документа
                 await userRef.set({
                     email: user.email,
                     lastLogin: new Date()
                 }, { merge: true });
 
-                // Перенаправление на страницу index1.html
+                // Перенаправление на страницу
                 window.location.href = 'groot.html';
             } catch (error) {
                 alert(`Ошибка: ${error.message}`);
