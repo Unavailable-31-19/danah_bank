@@ -33,33 +33,34 @@
             appId: "1:400447808100:web:585a7f81f7d3b138d7b571",
             measurementId: "G-S62J55TS5X"
         };
-    
+
         // Инициализация Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.getAuth(app);
         const db = firebase.firestore(app);  // Инициализация Firestore
-    
+
         // Обработчик регистрации
         document.getElementById('signupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-    
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-    
+
             try {
                 // Попытка регистрации
                 const userCredential = await firebase.createUserWithEmailAndPassword(auth, email, password);
                 alert('Регистрация успешна!');
-    
+
                 // Сохранение данных пользователя в Firestore
                 const user = firebase.auth().currentUser;
-                const userRef = db.collection('users').doc(user.uid);  // Коллекция пользователей
+                const userRef = db.collection('users').doc(user.email);  // Используем email как ID документа
                 await userRef.set({
                     email: user.email,
+                    balance: 0,  // Начальный баланс 0
                     lastLogin: new Date(),
                     role: "user" // Роль по умолчанию — пользователь
                 }, { merge: true });
-    
+
                 // Перенаправление на страницу входа
                 window.location.href = 'login.html';
             } catch (error) {
@@ -67,6 +68,6 @@
             }
         });
     </script>
-    
+
 </body>
 </html>
