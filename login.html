@@ -38,7 +38,7 @@
         // Инициализация Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.getAuth(app);
-        const db = firebase.firestore(app);  // Инициализация Firestore
+        const db = firebase.firestore(app);
 
         // Обработчик входа
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -50,11 +50,16 @@
             try {
                 // Попытка входа
                 const userCredential = await firebase.signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                if (!user) {
+                    throw new Error('Не удалось получить данные пользователя.');
+                }
+
                 alert('Успешный вход!');
 
                 // Сохранение данных пользователя в Firestore
-                const user = firebase.auth().currentUser;
-                const userRef = db.collection('users').doc(user.email);  // Используем email как ID документа
+                const userRef = db.collection('users').doc(user.email);
                 await userRef.set({
                     email: user.email,
                     lastLogin: new Date()
@@ -63,10 +68,10 @@
                 // Перенаправление на страницу index1.html
                 window.location.href = 'index1.html';
             } catch (error) {
+                console.error('Ошибка входа:', error.message);
                 alert(`Ошибка: ${error.message}`);
             }
         });
     </script>
 </body>
 </html>
-
