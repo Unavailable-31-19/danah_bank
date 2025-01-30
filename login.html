@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация</title>
+    <title>Вход</title>
     <link rel="stylesheet" href="styles1.css">
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"></script>
@@ -11,16 +11,17 @@
 </head>
 <body>
     <div class="container">
-        <h1>Регистрация</h1>
-        <form id="signupForm">
+        <h1>Вход</h1>
+        <form id="loginForm">
             <input type="email" id="email" placeholder="Электронная почта" required>
             <input type="password" id="password" placeholder="Пароль" required>
-            <button type="submit" class="signup">Зарегистрироваться</button>
+            <button type="submit" class="login">Войти</button>
         </form>
         <div class="divider">
             <hr>
         </div>
-        <p><font color="gray">Уже есть аккаунт? <a href="login.html"></font><font color="light gray">Войти</font></a></p>
+        <button type="button" class="google">Войти через Google</button>
+        <p><font color="gray">Нет аккаунта? <a href="registration.html"></font><font color="light gray">Зарегистрироваться</font></a></p>
     </div>
     <script>
         // Конфигурация Firebase
@@ -70,7 +71,7 @@
                 console.log('Данные пользователя обновлены:', userData);
     
                 // Перенаправление на главную страницу
-                window.location.href = 'index1.html';
+                window.location.href = 'main.html';
             } catch (error) {
                 console.error('Ошибка входа:', error);
     
@@ -95,4 +96,3 @@
     
 </body>
 </html>
-
