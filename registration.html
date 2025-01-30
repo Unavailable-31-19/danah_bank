@@ -37,42 +37,46 @@
         // Инициализация Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.getAuth(app);
-        const db = firebase.firestore(app); // Инициализация Firestore
     
         // Обработчик регистрации
         document.getElementById('signupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
     
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+    
+            // Проверка данных перед отправкой
+            if (!email || !password) {
+                alert('Пожалуйста, заполните все поля.');
+                return;
+            }
     
             try {
                 // Попытка регистрации
                 const userCredential = await firebase.createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user; // Получение данных о пользователе
     
-                alert('Регистрация успешна!');
-    
-                // Сохранение данных пользователя в Firestore
-                const userRef = db.collection('users').doc(user.uid); // Используем UID как идентификатор документа
-                const userData = {
-                    email: user.email,
-                    lastLogin: new Date(),
-                    role: "user" // Роль по умолчанию — пользователь
-                };
-    
-                await userRef.set(userData, { merge: true });
-                console.log('Данные пользователя сохранены:', userData);
+                console.log('Пользователь успешно зарегистрирован:', user);
     
                 // Перенаправление на страницу входа
+                alert('Регистрация успешна! Переход на страницу входа...');
                 window.location.href = 'login.html';
             } catch (error) {
-                alert(`Ошибка: ${error.message}`);
                 console.error('Ошибка регистрации:', error);
+    
+                // Обработка конкретных ошибок
+                if (error.code === 'auth/email-already-in-use') {
+                    alert('Эта электронная почта уже зарегистрирована.');
+                } else if (error.code === 'auth/weak-password') {
+                    alert('Пароль должен содержать не менее 6 символов.');
+                } else if (error.code === 'auth/invalid-email') {
+                    alert('Введите действительный адрес электронной почты.');
+                } else {
+                    alert(`Ошибка: ${error.message}`);
+                }
             }
         });
     </script>
-    
     
 </body>
 </html>
