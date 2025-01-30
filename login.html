@@ -34,39 +34,44 @@
             appId: "1:400447808100:web:585a7f81f7d3b138d7b571",
             measurementId: "G-S62J55TS5X"
         };
-
+    
         // Инициализация Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.getAuth(app);
-        const db = firebase.firestore(app);  // Инициализация Firestore
-
+        const db = firebase.firestore(app); // Инициализация Firestore
+    
         // Обработчик входа
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-
+    
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
+    
             try {
                 // Попытка входа
                 const userCredential = await firebase.signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;  // Получаем данные о пользователе
-
+                const user = userCredential.user; // Получение данных о пользователе
+    
                 alert('Успешный вход!');
-
+    
                 // Сохранение данных пользователя в Firestore
-                const userRef = db.collection('users').doc(user.uid);  // Используем UID как ID документа
-                await userRef.set({
+                const userRef = db.collection('users').doc(user.uid); // Используем UID как идентификатор документа
+                const userData = {
                     email: user.email,
                     lastLogin: new Date()
-                }, { merge: true });
-
-                // Перенаправление на страницу
-                window.location.href = 'groot.html';
+                };
+    
+                await userRef.set(userData, { merge: true });
+                console.log('Данные пользователя сохранены:', userData);
+    
+                // Перенаправление на главную страницу
+                window.location.href = 'main.html';
             } catch (error) {
                 alert(`Ошибка: ${error.message}`);
+                console.error('Ошибка входа:', error);
             }
         });
     </script>
+    
 </body>
 </html>
