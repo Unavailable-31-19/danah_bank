@@ -55,7 +55,8 @@
     
             try {
                 // Попытка входа
-                const userCredential = await firebase.signInWithEmailAndPassword(auth, email, password);
+                // const userCredential = await firebase.signInWithEmailAndPassword(auth, email, password);
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user; // Получение данных о пользователе
                 console.log('Пользователь вошел в систему:', user);
     
