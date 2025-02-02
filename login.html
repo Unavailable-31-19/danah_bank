@@ -36,9 +36,9 @@
         };
     
         // Инициализация Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.getAuth(app);
-        const db = firebase.firestore(app); // Инициализация Firestore
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = firestore(app); // Инициализация Firestore
     
         // Обработчик входа
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
