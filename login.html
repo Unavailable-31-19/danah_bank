@@ -3,97 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход</title>
-    <link rel="stylesheet" href="styles1.css">
-    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js"></script>
+    <title>Логин</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Вход</h1>
-        <form id="loginForm">
-            <input type="email" id="email" placeholder="Электронная почта" required>
-            <input type="password" id="password" placeholder="Пароль" required>
-            <button type="submit" class="login">Войти</button>
+    <div class="login-container">
+        <h2>Вход</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit">Войти</button>
         </form>
-        <div class="divider">
-            <hr>
-        </div>
-        <button type="button" class="google">Войти через Google</button>
-        <p><font color="gray">Нет аккаунта? <a href="registration.html"></font><font color="light gray">Зарегистрироваться</font></a></p>
+        <p id="error-message" style="color: red;"></p>
+        <p>Нет аккаунта? <a href="register.html">Зарегистрируйтесь</a></p>
     </div>
-    <script>
-        // Конфигурация Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyD3EDKVbNdPHBhMNGFB4RTnk8QNVMeg1Ho",
-            authDomain: "danah-school-db.firebaseapp.com",
-            projectId: "danah-school-db",
-            storageBucket: "danah-school-db.firebasestorage.app",
-            messagingSenderId: "400447808100",
-            appId: "1:400447808100:web:585a7f81f7d3b138d7b571",
-            measurementId: "G-S62J55TS5X"
-        };
-    
-        // Инициализация Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = firestore(app); // Инициализация Firestore
-    
-        // Обработчик входа
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-    
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
-    
-            // Проверка заполненности полей
-            if (!email || !password) {
-                alert('Пожалуйста, заполните все поля.');
-                return;
-            }
-    
-            try {
-                // Попытка входа
-                // const userCredential = await firebase.signInWithEmailAndPassword(auth, email, password);
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user; // Получение данных о пользователе
-                console.log('Пользователь вошел в систему:', user);
-    
-                alert('Успешный вход!');
-    
-                // Сохранение данных пользователя в Firestore
-                const userData = {
-                    email: user.email,
-                    lastLogin: new Date().toISOString()
-                };
-    
-                await db.collection('users').doc(user.uid).set(userData, { merge: true });
-                console.log('Данные пользователя обновлены:', userData);
-    
-                // Перенаправление на главную страницу
-                window.location.href = 'index1.html';
-            } catch (error) {
-                console.error('Ошибка входа:', error);
-    
-                // Обработка распространенных ошибок
-                switch (error.code) {
-                    case 'auth/user-not-found':
-                        alert('Пользователь не найден. Проверьте введенные данные.');
-                        break;
-                    case 'auth/wrong-password':
-                        alert('Неверный пароль. Попробуйте снова.');
-                        break;
-                    case 'auth/invalid-email':
-                        alert('Неверный формат электронной почты.');
-                        break;
-                    default:
-                        alert(`Произошла ошибка: ${error.message}`);
-                }
-            }
-        });
-    </script>
-    
-    
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="login.js"></script>
 </body>
 </html>
